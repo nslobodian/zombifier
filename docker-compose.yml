@@ -1,0 +1,21 @@
+version: '3.7'
+
+services:
+  api:
+    build: .
+    ports:
+      - ${APP_PORT}:${APP_PORT}
+    volumes:
+      - .:/app
+    links:
+      - mongo
+  mongo:
+    image: mongo:latest
+    ports:
+      - "80:80"
+    environment:
+      MONGO_INITDB_DATABASE: zombifier
+    volumes:
+      - data-volume:/data/db
+volumes:
+  data-volume:
