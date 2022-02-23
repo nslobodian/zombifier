@@ -29,7 +29,7 @@ export class EquipmentController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.equipmentService.findOne(+id);
+    return this.equipmentService.findOne(id);
   }
 
   @Patch(':id')
@@ -37,11 +37,11 @@ export class EquipmentController {
     @Param('id') id: string,
     @Body() updateEquipmentDto: UpdateEquipmentDto,
   ) {
-    return this.equipmentService.update(+id, updateEquipmentDto);
+    return this.equipmentService.update(id, updateEquipmentDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.equipmentService.remove(+id);
+    return this.equipmentService.remove(id);
   }
 }

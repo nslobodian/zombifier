@@ -1,26 +1,32 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { CreateEquipmentDto } from './dto/create-equipment.dto';
 import { UpdateEquipmentDto } from './dto/update-equipment.dto';
+import { EquipmentRepo } from './equipment.repo';
 
 @Injectable()
 export class EquipmentService {
+  @Inject(EquipmentRepo)
+  equipmentRepo: EquipmentRepo;
+
   create(createEquipmentDto: CreateEquipmentDto) {
-    return 'This action adds a new equipment';
+    // TODO: validation of zombie and item ids
+    // TODO: uniqueness
+    return this.equipmentRepo.create(createEquipmentDto);
   }
 
   findAll() {
-    return `This action returns all equipment`;
+    return this.equipmentRepo.findAll();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} equipment`;
+  findOne(id: string) {
+    return this.equipmentRepo.findOne(id);
   }
 
-  update(id: number, updateEquipmentDto: UpdateEquipmentDto) {
-    return `This action updates a #${id} equipment`;
+  update(id: string, updateEquipmentDto: UpdateEquipmentDto) {
+    return this.equipmentRepo.update(id, updateEquipmentDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} equipment`;
+  remove(id: string) {
+    return this.equipmentRepo.remove(id);
   }
 }
