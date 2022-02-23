@@ -27,11 +27,11 @@ export class EquipmentRepo {
       query.zombie = new mongo.ObjectId(queryParams.zombie);
     }
 
-    return this.model.find(query).lean().exec();
+    return this.model.find(query);
   }
 
   findOne(id: string) {
-    return this.model.findOne({ _id: id }).lean().exec();
+    return this.model.findOne({ _id: id });
   }
 
   update(id: string, updateEquipmentDto: UpdateEquipmentDto) {

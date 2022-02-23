@@ -1,7 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { CurrencyCode } from 'src/currency/currency.model';
-import { CurrencyService } from 'src/currency/currency.service';
-import { ItemService } from 'src/item/item.service';
+import { round } from '../utils/round';
+import { CurrencyCode } from '../currency/currency.model';
+import { CurrencyService } from '../currency/currency.service';
+import { ItemService } from '../item/item.service';
 import { CreateEquipmentDto } from './dto/create-equipment.dto';
 import { GetEquipmentDto } from './dto/get-equipment.dto';
 import { UpdateEquipmentDto } from './dto/update-equipment.dto';
@@ -49,7 +50,7 @@ export class EquipmentService {
 
     return exchangeRate.map((rate) => ({
       code: rate.code,
-      price: totalForZombie * rate.rate,
+      price: round(totalForZombie * rate.rate, 2),
     }));
   }
 

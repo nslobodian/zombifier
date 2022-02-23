@@ -1,4 +1,4 @@
-import { ItemDocument } from 'src/item/schema/item.schema';
+import { ItemDocument } from '../item/schema/item.schema';
 import { Equipment } from './schema/equipment.schema';
 
 export class EquipmentFacade {

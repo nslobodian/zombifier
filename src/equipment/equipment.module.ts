@@ -4,8 +4,8 @@ import { EquipmentController } from './equipment.controller';
 import { EquipmentRepo } from './equipment.repo';
 import { Equipment, EquipmentSchema } from './schema/equipment.schema';
 import { MongooseModule } from '@nestjs/mongoose';
-import { ItemModule } from 'src/item/item.module';
-import { CurrencyModule } from 'src/currency/currency.module';
+import { ItemModule } from '../item/item.module';
+import { CurrencyModule } from '../currency/currency.module';
 
 @Module({
   controllers: [EquipmentController],
