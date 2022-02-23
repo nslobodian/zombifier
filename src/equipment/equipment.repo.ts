@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, mongo } from 'mongoose';
+import { Model, mongo, FilterQuery } from 'mongoose';
 import { CreateEquipmentDto } from './dto/create-equipment.dto';
+import { GetEquipmentDto } from './dto/get-equipment.dto';
 import { UpdateEquipmentDto } from './dto/update-equipment.dto';
 import { Equipment, EquipmentDocument } from './schema/equipment.schema';
 
@@ -19,8 +20,14 @@ export class EquipmentRepo {
     });
   }
 
-  findAll() {
-    return this.model.find().lean().exec();
+  findAll(queryParams: GetEquipmentDto) {
+    const query: FilterQuery<Equipment> = {};
+
+    if (queryParams.zombie) {
+      query.zombie = new mongo.ObjectId(queryParams.zombie);
+    }
+
+    return this.model.find(query).lean().exec();
   }
 
   findOne(id: string) {

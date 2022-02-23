@@ -1,17 +1,30 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { ItemDto } from './item.dto';
+import { ItemRequestService } from './item-request.service';
 import { ItemRepo } from './item.repo';
-import { Item } from './schema/item.schema';
+import { ItemDocument } from './schema/item.schema';
 
 @Injectable()
 export class ItemService {
   @Inject(ItemRepo)
   itemRepo: ItemRepo;
 
-  find(): Promise<Item[]> {
+  @Inject(ItemRequestService)
+  itemRequestService: ItemRequestService;
+
+  findAll(): Promise<ItemDocument[]> {
     return this.itemRepo.findAll();
   }
-  ingestItems(items: ItemDto[]) {
-    // TODO:
+
+  // TODO: Create Cron Job
+  async ingestItems() {
+    const items = await this.itemRequestService.request();
+    items.items.map((item) =>
+      this.itemRepo.create({
+        externalId: `${item.id}`,
+        price: item.price,
+        name: item.name,
+      }),
+    );
+    return true;
   }
 }

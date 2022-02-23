@@ -1,0 +1,9 @@
+Authorization/Authentification?
+Roles for editing resources?
+Cron tasks for updating?
+Cache per external service?
+Config service?
+Universal schema with timestamp?
+Soft delete of documents?
+Path param validation
+GET pagination and query params

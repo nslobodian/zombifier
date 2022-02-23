@@ -1,21 +1,56 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { CurrencyCode } from 'src/currency/currency.model';
+import { CurrencyService } from 'src/currency/currency.service';
+import { ItemService } from 'src/item/item.service';
 import { CreateEquipmentDto } from './dto/create-equipment.dto';
+import { GetEquipmentDto } from './dto/get-equipment.dto';
 import { UpdateEquipmentDto } from './dto/update-equipment.dto';
 import { EquipmentRepo } from './equipment.repo';
+import { EquipmentFacade } from './item.facade';
 
 @Injectable()
 export class EquipmentService {
   @Inject(EquipmentRepo)
   equipmentRepo: EquipmentRepo;
 
+  @Inject(ItemService)
+  itemService: ItemService;
+
+  @Inject(CurrencyService)
+  currencyService: CurrencyService;
+
   create(createEquipmentDto: CreateEquipmentDto) {
     // TODO: validation of zombie and item ids
     // TODO: uniqueness
+    // TODO: validate number of items in equipment
     return this.equipmentRepo.create(createEquipmentDto);
   }
 
-  findAll() {
-    return this.equipmentRepo.findAll();
+  async findAll(query?: GetEquipmentDto) {
+    const equipments = await this.equipmentRepo.findAll(query);
+    const items = await this.itemService.findAll();
+
+    return equipments.map((equipment) =>
+      new EquipmentFacade(equipment, items).plainEquipment(),
+    );
+  }
+
+  async getTotalForZombie(zombieId: string) {
+    const equipments = await this.findAll({ zombie: zombieId });
+    const exchangeRate = await this.currencyService.findAll([
+      CurrencyCode.pln,
+      CurrencyCode.eu,
+      CurrencyCode.usd,
+    ]);
+
+    const totalForZombie = equipments.reduce((pv, cv) => {
+      return cv.totalPrice + pv;
+    }, 0);
+
+    return exchangeRate.map((rate) => ({
+      code: rate.code,
+      price: totalForZombie * rate.rate,
+    }));
   }
 
   findOne(id: string) {

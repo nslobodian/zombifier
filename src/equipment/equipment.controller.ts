@@ -6,11 +6,13 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { EquipmentService } from './equipment.service';
 import { CreateEquipmentDto } from './dto/create-equipment.dto';
 import { UpdateEquipmentDto } from './dto/update-equipment.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { GetEquipmentDto } from './dto/get-equipment.dto';
 
 @ApiTags('equipment')
 @Controller('equipment')
@@ -23,8 +25,13 @@ export class EquipmentController {
   }
 
   @Get()
-  findAll() {
-    return this.equipmentService.findAll();
+  findAll(@Query() query: GetEquipmentDto) {
+    return this.equipmentService.findAll(query);
+  }
+
+  @Get('total/:zombieId')
+  totalForZombie(@Param('zombieId') zombieId: string) {
+    return this.equipmentService.getTotalForZombie(zombieId);
   }
 
   @Get(':id')

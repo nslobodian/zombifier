@@ -11,12 +11,12 @@ export class ItemRepo {
     return this.model.create(createItemDto);
   }
 
-  findAll(): Promise<Item[]> {
-    return this.model.find().lean().exec();
+  findAll(): Promise<ItemDocument[]> {
+    return this.model.find().exec();
   }
 
   findOne(id: string) {
-    return this.model.findOne({ _id: id }).lean().exec();
+    return this.model.findOne({ _id: id }).exec();
   }
 
   update(id: string, updateItemDto: Item) {

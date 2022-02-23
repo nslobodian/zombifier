@@ -5,6 +5,8 @@ export type EquipmentDocument = Equipment & Document;
 
 @Schema({ timestamps: true })
 export class Equipment {
+  _id: Types.ObjectId;
+
   @Prop({ type: Types.ObjectId, ref: 'Zombie' })
   zombie: Types.ObjectId;
 
@@ -12,7 +14,10 @@ export class Equipment {
   item: Types.ObjectId;
 
   @Prop({ type: Number })
-  qty?: number;
+  qty?: number = 0;
+
+  @Prop({ type: Number })
+  price: number;
 
   @Prop({ type: Date })
   createdAt: Date;
