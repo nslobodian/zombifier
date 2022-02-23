@@ -1,9 +1,19 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { ZombieService } from './zombie.service';
 import { CreateZombieDto } from './dto/create-zombie.dto';
 import { UpdateZombieDto } from './dto/update-zombie.dto';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('zombie')
+@ApiTags('zombie')
 export class ZombieController {
   constructor(private readonly zombieService: ZombieService) {}
 
