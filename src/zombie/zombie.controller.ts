@@ -29,16 +29,17 @@ export class ZombieController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.zombieService.findOne(+id);
+    return this.zombieService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateZombieDto: UpdateZombieDto) {
-    return this.zombieService.update(+id, updateZombieDto);
+    return this.zombieService.update(id, updateZombieDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.zombieService.remove(+id);
+  async remove(@Param('id') id: string) {
+    await this.zombieService.remove(id);
+    return { success: true };
   }
 }

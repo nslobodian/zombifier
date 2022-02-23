@@ -7,14 +7,18 @@ services:
       - ${APP_PORT}:${APP_PORT}
     volumes:
       - .:/app
+    depends_on:
+      - db
     links:
-      - mongo
-  mongo:
+      - db
+
+  db:
     image: mongo:latest
+    container_name: db_mongo
     ports:
-      - "80:80"
+       - 27017:27017
     environment:
-      MONGO_INITDB_DATABASE: zombifier
+      - MONGO_INITDB_DATABASE=zombifier
     volumes:
       - data-volume:/data/db
 volumes:

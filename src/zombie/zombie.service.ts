@@ -1,26 +1,30 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { CreateZombieDto } from './dto/create-zombie.dto';
 import { UpdateZombieDto } from './dto/update-zombie.dto';
+import { ZombieRepo } from './zombie.repo';
 
 @Injectable()
 export class ZombieService {
+  @Inject(ZombieRepo)
+  private zombieRepo: ZombieRepo;
+
   create(createZombieDto: CreateZombieDto) {
-    return 'This action adds a new zombie';
+    return this.zombieRepo.create(createZombieDto);
   }
 
   findAll() {
-    return `This action returns all zombie`;
+    return this.zombieRepo.findAll();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} zombie`;
+  findOne(id: string) {
+    return this.zombieRepo.findOne(id);
   }
 
-  update(id: number, updateZombieDto: UpdateZombieDto) {
-    return `This action updates a #${id} zombie`;
+  update(id: string, updateZombieDto: UpdateZombieDto) {
+    return this.zombieRepo.update(id, updateZombieDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} zombie`;
+  remove(id: string) {
+    return this.zombieRepo.remove(id);
   }
 }
