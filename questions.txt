@@ -1,9 +1,10 @@
-Authorization/Authentification?
-Roles for editing resources?
-Cron tasks for updating?
-Cache per external service?
-Config service?
-Universal schema with timestamp?
-Soft delete of documents?
-Path param validation
-GET pagination and query params
+1. How Authorization/Authentification should look like? I will start with local auth based on @nest/passport. It may be possible to add social login in the future
+2. RBAC? Who is eligible to update/create/delete resources? Do we need admins/moderators or other types of roles?
+3. Cron jobs for updating items and exchange rates. Will use @nestjs/schedule
+4. Save exchangeRates to DB.
+5. Above resources potentially in high demand. I will add caching in front of DB to increase speed.
+6. Configuration service based on @nestjs/config.  
+7. Universal schema with timestamp. I want to create abstracts for schemas for avoiding duplication of mongo code. Lean functions, id/_id problem
+8. Soft delete of resources. deleted: boolean for each type
+9. Path param validation. Validate path param in case of receiving mongo ids
+10. GET pagination and query params. I want to create abstracts for unification of responses. {data: T, metadata: M}. Also one way of handling pagination and querying
